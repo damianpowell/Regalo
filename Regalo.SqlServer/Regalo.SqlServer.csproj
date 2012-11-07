@@ -62,7 +62,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <PropertyGroup>
-    <PreBuildEvent>powershell.exe -noprofile -noninteractive -command ". '$(ProjectDir)..\write-assemblyinfo.ps1' '$(ProjectName)' '$(ProjectDir)Properties\AssemblyInfo.Version.cs'"</PreBuildEvent>
+    <PreBuildEvent>powershell.exe -noprofile -noninteractive -command ". '$(ProjectDir)..\write-assemblyinfo.ps1' '$(ProjectName)' '$(ProjectDir)Properties\AssemblyInfo.Version.cs'; exit $LASTEXITCODE"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
