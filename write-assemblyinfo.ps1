@@ -1,5 +1,24 @@
 param($projectName, $assemblyInfoFilename)
+
 Set-StrictMode -Version Latest
+
+#$DebugPreference = "Continue"
+#$VerbosePreference = "Continue"
+
+# Try to find git.exe in the path
+$gitPath = $(cmd /c where git.exe 2> $null)
+
+# If it's not there, look for it in GitHub for Windows
+if (!$gitPath) {
+    $gitPath = $(
+        (gci -rec -inc git.exe ~\AppData\Local\github |
+            select -ExpandProperty FullName) -like '*\cmd\git.exe' |
+                select -First 1
+    )
+}
+
+Write-Debug "gitPath=$gitPath"
+function git { & $gitPath $args }
 
 $gitVersion = git describe --tags --long --match "v*.*.*" --abbrev=40
 $gitVersion -match "^v(\d+)\.(\d+)\.(\d+)\-(\d+)-(g[a-f0-9]{40})`$"
