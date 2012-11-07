@@ -17,10 +17,11 @@ if (!$gitPath) {
     )
 }
 
-Write-Debug "gitPath=$gitPath"
+Write-Debug "gitPath = $gitPath"
 function git { & $gitPath $args }
 
 $gitVersion = git describe --tags --long --match "v*.*.*" --abbrev=40
+Write-Debug "gitVersion = $gitVersion"
 $gitVersion -match "^v(\d+)\.(\d+)\.(\d+)\-(\d+)-(g[a-f0-9]{40})`$"
 ($major, $minor, $build, $revision) = $Matches[1..4]
 
